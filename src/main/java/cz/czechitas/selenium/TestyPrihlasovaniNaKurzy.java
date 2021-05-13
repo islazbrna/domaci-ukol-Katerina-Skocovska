@@ -30,7 +30,6 @@ public class TestyPrihlasovaniNaKurzy {
 
     @BeforeEach
     public void setUp() {
-//      System.setProperty("webdriver.gecko.driver", System.getProperty("user.home") + "/Java-Training/Selenium/geckodriver");
         System.setProperty("webdriver.gecko.driver", "C:\\Java-Training\\Selenium\\geckodriver.exe");
         prohlizec = new FirefoxDriver();
         prohlizec.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
@@ -48,8 +47,8 @@ public class TestyPrihlasovaniNaKurzy {
 
     }
 
-//    Rodič s existujícím účtem musí být schopen přihlásit svoje dítě na kurz.
-//    Varianta, že rodič nejprve vybere kurz a potom se přihlásí ke svému účtu, vyplní přihlášku, odešle ji a nakonec ve svém seznamu přihlášek zkontroluje, že ji systém eviduje.
+    //    Rodič s existujícím účtem musí být schopen přihlásit svoje dítě na kurz.
+    //    Varianta, že rodič nejprve vybere kurz a potom se přihlásí ke svému účtu, vyplní přihlášku, odešle ji a nakonec ve svém seznamu přihlášek zkontroluje, že ji systém eviduje.
 
     @Test
     public void parentChoosesCourseLogsInFillsApplicationChecksApplicationWasCreated() {
@@ -85,14 +84,9 @@ public class TestyPrihlasovaniNaKurzy {
         }
 
         String randomSurname = sb.toString();
-
         randomSurname = randomSurname.toLowerCase();
         String randomSurnameUpperCaseFirst = randomSurname.substring(0, 1).toUpperCase() + randomSurname.substring(1);
-        System.out.println(randomSurnameUpperCaseFirst);
-        System.out.println(randomSurname);
-
         String fullName = randomForenameUpperCaseFirst + " " + randomSurnameUpperCaseFirst;
-        System.out.println(fullName);
 
         WebElement buttonThreeMonthCourseMoreInfo = prohlizec.findElement(By.xpath("//a [@href ='https://cz-test-jedna.herokuapp.com/31-trimesicni-kurzy-programova']"));
         buttonThreeMonthCourseMoreInfo.click();
@@ -160,13 +154,8 @@ public class TestyPrihlasovaniNaKurzy {
         }
 
         String randomForename = sb.toString();
-        System.out.println(randomForename);
-
         randomForename = randomForename.toLowerCase();
         String randomForenameUpperCaseFirst = randomForename.substring(0, 1).toUpperCase() + randomForename.substring(1);
-
-        String randomForenameFirstCaps = randomForename.substring(0, 1).toUpperCase() + randomForename.substring(1);
-        System.out.println(randomForenameFirstCaps);
 
         int surenameLength = 8;
 
@@ -178,14 +167,9 @@ public class TestyPrihlasovaniNaKurzy {
         }
 
         String randomSurname = sb.toString();
-
         randomSurname = randomSurname.toLowerCase();
         String randomSurnameUpperCaseFirst = randomSurname.substring(0, 1).toUpperCase() + randomSurname.substring(1);
-        System.out.println(randomSurnameUpperCaseFirst);
-        System.out.println(randomSurname);
-
         String fullName = randomForenameUpperCaseFirst + " " + randomSurnameUpperCaseFirst;
-        System.out.println(fullName);
 
         WebElement buttonThreeMonthCourseMoreInfo = prohlizec.findElement(By.xpath("//a [@href ='https://cz-test-jedna.herokuapp.com/31-trimesicni-kurzy-programova']"));
         buttonThreeMonthCourseMoreInfo.click();
