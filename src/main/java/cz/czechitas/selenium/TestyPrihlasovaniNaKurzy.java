@@ -16,6 +16,17 @@ import java.util.concurrent.TimeUnit;
 
 public class TestyPrihlasovaniNaKurzy {
 
+    public void loginToWebsite() {
+        WebElement emailField = prohlizec.findElement(By.id("email"));
+        WebElement passwordField = prohlizec.findElement(By.xpath("//input[@id = 'password']"));
+        WebElement loginButton = prohlizec.findElement(By.xpath("//button[contains(text(),'Přihlásit')]"));
+
+        emailField.sendKeys("test@katka.cz");
+        passwordField.sendKeys("Lalala1");
+        loginButton.click();
+
+    }
+
     WebDriver prohlizec;
 
     @BeforeEach
@@ -30,32 +41,13 @@ public class TestyPrihlasovaniNaKurzy {
     @Test
     public void parentLogsIntoAppWithExistingAccount() {
 
-
         prohlizec.navigate().to("https://cz-test-jedna.herokuapp.com/prihlaseni");
-        WebElement emailField = prohlizec.findElement(By.id("email"));
-        WebElement passwordField = prohlizec.findElement(By.xpath("//input[@id = 'password']"));
-        WebElement loginButton = prohlizec.findElement(By.xpath("//button[contains(text(),'Přihlásit')]"));
-
-        emailField.sendKeys("test@katka.cz");
-        passwordField.sendKeys("Lalala1");
-        loginButton.click();
+        loginToWebsite();
 
         System.out.println(prohlizec.getCurrentUrl());
         Assertions.assertEquals(prohlizec.getCurrentUrl(), "https://cz-test-jedna.herokuapp.com/zaci");
 
-
-        //WebElement LoginButton = prohlizec.findElement(By.class(("btn-primary"));
-        //LoginButton.click();
-
-        //windowAfterLogin = "https//cz-test-jedna.herokuapp.com/zaci".
-
-        //assert
     }
-
-//        WebElement spanPocetLajku = prohlizec.findElement(By.id("lvlAwesome"));
-//        int skutecnyPocetLajku = Integer.parseInt(spanPocetLajku.getText());
-//        Assertions.assertEquals(zadanyPocetLajku, skutecnyPocetLajku);
-
 
 //    Rodič s existujícím účtem musí být schopen přihlásit svoje dítě na kurz.
 //    Varianta, že rodič nejprve vybere kurz a potom se přihlásí ke svému účtu, vyplní přihlášku, odešle ji a nakonec ve svém seznamu přihlášek zkontroluje, že ji systém eviduje.
@@ -72,7 +64,7 @@ public class TestyPrihlasovaniNaKurzy {
         Random random = new Random();
         int forenameLength = 5;
 
-        for(int i = 0; i < forenameLength; i++) {
+        for (int i = 0; i < forenameLength; i++) {
             int index = random.nextInt(alphabet.length());
             char randomChar = alphabet.charAt(index);
             sb.append(randomChar);
@@ -84,7 +76,7 @@ public class TestyPrihlasovaniNaKurzy {
         int surenameLength = 8;
 
         sb = new StringBuilder();
-        for(int i = 0; i < surenameLength; i++) {
+        for (int i = 0; i < surenameLength; i++) {
             int index = random.nextInt(alphabet.length());
             char randomChar = alphabet.charAt(index);
             sb.append(randomChar);
@@ -102,13 +94,7 @@ public class TestyPrihlasovaniNaKurzy {
         buttonJava1CourseMoreInfo.click();
 
         //login part
-        WebElement emailField = prohlizec.findElement(By.id("email"));
-        WebElement passwordField = prohlizec.findElement(By.xpath("//input[@id = 'password']"));
-        WebElement loginButton = prohlizec.findElement(By.xpath("//button[contains(text(),'Přihlásit')]"));
-
-        emailField.sendKeys("test@katka.cz");
-        passwordField.sendKeys("Lalala1");
-        loginButton.click();
+        loginToWebsite();
 
         //fill in application part
         WebElement selectDates = prohlizec.findElement(By.xpath("//div[contains(text(),'Vyberte termín')]"));
@@ -123,25 +109,25 @@ public class TestyPrihlasovaniNaKurzy {
         inputSurname.sendKeys(randomSurname);
         WebElement inputBirthday = prohlizec.findElement(By.id("birthday"));
         inputBirthday.sendKeys("20.02.2010");
+
         WebElement selectPaymentMethod = prohlizec.findElement(By.xpath("//label[@for='payment_transfer']"));
         selectPaymentMethod.click();
-
         WebElement selectAgreeWithTermsConditions = prohlizec.findElement(By.xpath("//label[@for ='terms_conditions']"));
         selectAgreeWithTermsConditions.click();
         WebElement buttonCreateNewApplication = prohlizec.findElement(By.xpath("//input[@value = 'Vytvořit přihlášku']"));
         buttonCreateNewApplication.click();
-
         WebElement navigationItemApplications = prohlizec.findElement(By.xpath("//a[@href = 'https://cz-test-jedna.herokuapp.com/zaci']"));
         navigationItemApplications.click();
 
-//        List<WebElement> listOfKidsNames = prohlizec.findElement(By.xpath("/html/body/div/div/div/div/div/div[2]/div[2]/div/table/tbody/tr[1]/td"));
+        List<WebElement> listOfKidsNames = prohlizec.findElements(By.xpath("//td[@class = 'dtr-control sorting_1']"));
+        WebElement oneKidName = listOfKidsNames.get(4);
+        System.out.println(oneKidName);
 //        String childNameOnTheListTurnedToString = checkChildNameInTheList.getText();
 //
 //        String expectedValueInTableOfApplicationsChildName = "Hanibal Lector";
 //        Assertions.assertEquals(expectedValueInTableOfApplicationsChildName,childNameOnTheListTurnedToString);
 
     }
-
 
     //Rodič s existujícím účtem musí být schopen přihlásit svoje dítě na kurz.
     //Varianta, že se rodič nejprve přihlásí ke svému účtu a potom vybere kurz, vyplní, odešle, zkontroluje v seznamu.
@@ -150,14 +136,7 @@ public class TestyPrihlasovaniNaKurzy {
     public void parentLogsInChoosesCourseFillsApplicationChecksApplicationWasCreated() {
 
         prohlizec.navigate().to("https://cz-test-jedna.herokuapp.com/prihlaseni");
-        //login part
-        WebElement emailField = prohlizec.findElement(By.id("email"));
-        WebElement passwordField = prohlizec.findElement(By.xpath("//input[@id = 'password']"));
-        WebElement loginButton = prohlizec.findElement(By.xpath("//button[contains(text(),'Přihlásit')]"));
-
-        emailField.sendKeys("test@katka.cz");
-        passwordField.sendKeys("Lalala1");
-        loginButton.click();
+        loginToWebsite();
 
         //navigate to applications
         WebElement buttonMoreInfoForParents = prohlizec.findElement(By.xpath("//*[@href = 'https://cz-test-jedna.herokuapp.com/pro-rodice']"));
@@ -173,7 +152,7 @@ public class TestyPrihlasovaniNaKurzy {
         Random random = new Random();
         int forenameLength = 5;
 
-        for(int i = 0; i < forenameLength; i++) {
+        for (int i = 0; i < forenameLength; i++) {
             int index = random.nextInt(alphabet.length());
             char randomChar = alphabet.charAt(index);
             sb.append(randomChar);
@@ -185,7 +164,7 @@ public class TestyPrihlasovaniNaKurzy {
         int surenameLength = 8;
 
         sb = new StringBuilder();
-        for(int i = 0; i < surenameLength; i++) {
+        for (int i = 0; i < surenameLength; i++) {
             int index = random.nextInt(alphabet.length());
             char randomChar = alphabet.charAt(index);
             sb.append(randomChar);
@@ -209,7 +188,6 @@ public class TestyPrihlasovaniNaKurzy {
         WebElement inputDate = prohlizec.findElement(By.xpath("//input[@type = 'search']"));
         inputDate.sendKeys("28.");
         inputDate.sendKeys(Keys.ENTER);
-
         WebElement inputForename = prohlizec.findElement(By.id("forename"));
         inputForename.sendKeys(randomForename);
         WebElement inputSurname = prohlizec.findElement(By.id("surname"));
@@ -217,8 +195,8 @@ public class TestyPrihlasovaniNaKurzy {
         WebElement inputBirthday = prohlizec.findElement(By.id("birthday"));
         inputBirthday.sendKeys("20.02.2010");
         WebElement selectPaymentMethod = prohlizec.findElement(By.xpath("//label[@for='payment_transfer']"));
-        selectPaymentMethod.click();
 
+        selectPaymentMethod.click();
         WebElement selectAgreeWithTermsConditions = prohlizec.findElement(By.xpath("//label[@for ='terms_conditions']"));
         selectAgreeWithTermsConditions.click();
         WebElement buttonCreateNewApplication = prohlizec.findElement(By.xpath("//input[@value = 'Vytvořit přihlášku']"));
@@ -231,19 +209,13 @@ public class TestyPrihlasovaniNaKurzy {
 
     ///vymysli si test
 
-    //nejkratší test, protože čas tlačí :)
+    //nejkratší test, protože čas tlačil :)
 
     @Test
     public void loggedInParentCanNavigateToContactDetails() {
 
         prohlizec.navigate().to("https://cz-test-jedna.herokuapp.com/prihlaseni");
-        WebElement emailField = prohlizec.findElement(By.id("email"));
-        WebElement passwordField = prohlizec.findElement(By.xpath("//input[@id = 'password']"));
-        WebElement loginButton = prohlizec.findElement(By.xpath("//button[contains(text(),'Přihlásit')]"));
-
-        emailField.sendKeys("test@katka.cz");
-        passwordField.sendKeys("Lalala1");
-        loginButton.click();
+        loginToWebsite();
 
         WebElement navigationItemContactDetails = prohlizec.findElement(By.xpath("//a[@href = 'https://cz-test-jedna.herokuapp.com/kontakt']"));
         navigationItemContactDetails.click();
