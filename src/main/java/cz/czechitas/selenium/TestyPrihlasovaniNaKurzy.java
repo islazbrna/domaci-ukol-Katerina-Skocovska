@@ -24,7 +24,6 @@ public class TestyPrihlasovaniNaKurzy {
         emailField.sendKeys("test@katka.cz");
         passwordField.sendKeys("Lalala1");
         loginButton.click();
-
     }
 
     WebDriver prohlizec;
@@ -58,7 +57,6 @@ public class TestyPrihlasovaniNaKurzy {
         prohlizec.navigate().to("https://cz-test-jedna.herokuapp.com/");
 
         //create random forename and surname
-
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         StringBuilder sb = new StringBuilder();
         Random random = new Random();
@@ -71,7 +69,11 @@ public class TestyPrihlasovaniNaKurzy {
         }
 
         String randomForename = sb.toString();
-        System.out.println(randomForename);
+        randomForename = randomForename.toLowerCase();
+        String randomForenameUpperCaseFirst = randomForename.substring(0, 1).toUpperCase() + randomForename.substring(1);
+
+        String randomForenameFirstCaps = randomForename.substring(0, 1).toUpperCase() + randomForename.substring(1);
+        System.out.println(randomForenameFirstCaps);
 
         int surenameLength = 8;
 
@@ -83,9 +85,13 @@ public class TestyPrihlasovaniNaKurzy {
         }
 
         String randomSurname = sb.toString();
+
+        randomSurname = randomSurname.toLowerCase();
+        String randomSurnameUpperCaseFirst = randomSurname.substring(0, 1).toUpperCase() + randomSurname.substring(1);
+        System.out.println(randomSurnameUpperCaseFirst);
         System.out.println(randomSurname);
 
-        String fullName = randomForename + " " + randomSurname;
+        String fullName = randomForenameUpperCaseFirst + " " + randomSurnameUpperCaseFirst;
         System.out.println(fullName);
 
         WebElement buttonThreeMonthCourseMoreInfo = prohlizec.findElement(By.xpath("//a [@href ='https://cz-test-jedna.herokuapp.com/31-trimesicni-kurzy-programova']"));
@@ -119,14 +125,11 @@ public class TestyPrihlasovaniNaKurzy {
         WebElement navigationItemApplications = prohlizec.findElement(By.xpath("//a[@href = 'https://cz-test-jedna.herokuapp.com/zaci']"));
         navigationItemApplications.click();
 
-        List<WebElement> listOfKidsNames = prohlizec.findElements(By.xpath("//td[@class = 'dtr-control sorting_1']"));
-        WebElement oneKidName = listOfKidsNames.get(4);
-        System.out.println(oneKidName);
-//        String childNameOnTheListTurnedToString = checkChildNameInTheList.getText();
-//
-//        String expectedValueInTableOfApplicationsChildName = "Hanibal Lector";
-//        Assertions.assertEquals(expectedValueInTableOfApplicationsChildName,childNameOnTheListTurnedToString);
-
+        WebElement searchInput = prohlizec.findElement(By.xpath("//input [@type = 'search']"));
+        searchInput.sendKeys(fullName + Keys.ENTER);
+        WebElement myNewName = prohlizec.findElement(By.xpath("//td[@class='sorting_1 dtr-control' and text()='" + fullName + "']"));
+        String myNewNameText = myNewName.getText();
+        Assertions.assertEquals(fullName, myNewNameText);
     }
 
     //Rodič s existujícím účtem musí být schopen přihlásit svoje dítě na kurz.
@@ -145,8 +148,6 @@ public class TestyPrihlasovaniNaKurzy {
         WebElement buttonCreateApplication = prohlizec.findElement(By.xpath("//*[@href = 'https://cz-test-jedna.herokuapp.com/zaci/pridat']"));
         buttonCreateApplication.click();
 
-        //create random forename and surname
-
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         StringBuilder sb = new StringBuilder();
         Random random = new Random();
@@ -161,6 +162,12 @@ public class TestyPrihlasovaniNaKurzy {
         String randomForename = sb.toString();
         System.out.println(randomForename);
 
+        randomForename = randomForename.toLowerCase();
+        String randomForenameUpperCaseFirst = randomForename.substring(0, 1).toUpperCase() + randomForename.substring(1);
+
+        String randomForenameFirstCaps = randomForename.substring(0, 1).toUpperCase() + randomForename.substring(1);
+        System.out.println(randomForenameFirstCaps);
+
         int surenameLength = 8;
 
         sb = new StringBuilder();
@@ -171,16 +178,19 @@ public class TestyPrihlasovaniNaKurzy {
         }
 
         String randomSurname = sb.toString();
+
+        randomSurname = randomSurname.toLowerCase();
+        String randomSurnameUpperCaseFirst = randomSurname.substring(0, 1).toUpperCase() + randomSurname.substring(1);
+        System.out.println(randomSurnameUpperCaseFirst);
         System.out.println(randomSurname);
 
-        String fullName = randomForename + " " + randomSurname;
+        String fullName = randomForenameUpperCaseFirst + " " + randomSurnameUpperCaseFirst;
         System.out.println(fullName);
 
         WebElement buttonThreeMonthCourseMoreInfo = prohlizec.findElement(By.xpath("//a [@href ='https://cz-test-jedna.herokuapp.com/31-trimesicni-kurzy-programova']"));
         buttonThreeMonthCourseMoreInfo.click();
         WebElement buttonJava1CourseMoreInfo = prohlizec.findElement(By.xpath("//a [@href ='https://cz-test-jedna.herokuapp.com/zaci/pridat/71-java-1']"));
         buttonJava1CourseMoreInfo.click();
-
 
         //fill in application part
         WebElement selectDates = prohlizec.findElement(By.xpath("//div[contains(text(),'Vyberte termín')]"));
@@ -204,8 +214,13 @@ public class TestyPrihlasovaniNaKurzy {
 
         WebElement navigationItemApplications = prohlizec.findElement(By.xpath("//a[@href = 'https://cz-test-jedna.herokuapp.com/zaci']"));
         navigationItemApplications.click();
-    }
 
+        WebElement searchInput = prohlizec.findElement(By.xpath("//input [@type = 'search']"));
+        searchInput.sendKeys(fullName + Keys.ENTER);
+        WebElement myNewName = prohlizec.findElement(By.xpath("//td[@class='sorting_1 dtr-control' and text()='" + fullName + "']"));
+        String myNewNameText = myNewName.getText();
+        Assertions.assertEquals(fullName, myNewNameText);
+    }
 
     ///vymysli si test
 
